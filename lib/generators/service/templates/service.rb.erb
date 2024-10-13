@@ -1,0 +1,17 @@
+module <%= namespace.camelize %>
+  module <%= object.tableize.camelize %>
+    class <%= action_name.camelize %>Service
+      def initialize(<%= object.underscore %>)
+        @<%= object.underscore %> = <%= object.underscore %>
+      end
+
+      def call
+        # Your business logic for <%= action_name.downcase %>ing a <%= object.camelize %> goes here
+      end
+
+      private
+
+      attr_reader :<%= object.underscore %>
+    end
+  end
+end
