@@ -7,7 +7,7 @@
 # A side effect of creating the Publication or Release would be updating the blog post (if that's even required - you could also
 # just calculate the status of a post based on its publication history; sort of an event-sourcing approach)
 
-# A lot of times, I think having a bunch of services that all do things to a single model are a code smell of missing domain objects
+# A lot of times, I think having a bunch of services that all do things to a single model is a code smell of missing domain objects
 
 module Blog
   module Posts
