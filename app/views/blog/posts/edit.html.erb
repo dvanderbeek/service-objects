@@ -2,6 +2,8 @@
 
 <%= render "form", blog_post: @blog_post %>
 
+<%= button_to "Publish", [:publish, @blog_post], method: :patch, local: true %>
+
 <br>
 
 <div>

@@ -1,5 +1,5 @@
 class Blog::PostsController < ApplicationController
-  before_action :set_blog_post, only: %i[ show edit update destroy ]
+  before_action :set_blog_post, only: %i[ show edit update publish destroy ]
 
   # GET /blog/posts or /blog/posts.json
   def index
@@ -39,6 +39,18 @@ class Blog::PostsController < ApplicationController
     respond_to do |format|
       if @blog_post.update(blog_post_params)
         format.html { redirect_to @blog_post, notice: "Post was successfully updated." }
+        format.json { render :show, status: :ok, location: @blog_post }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @blog_post.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def publish
+    respond_to do |format|
+      if Blog::Posts::PublishService.call(post: @blog_post)
+        format.html { redirect_to @blog_post, notice: "Post was successfully published." }
         format.json { render :show, status: :ok, location: @blog_post }
       else
         format.html { render :edit, status: :unprocessable_entity }

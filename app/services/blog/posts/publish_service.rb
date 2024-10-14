@@ -12,18 +12,32 @@
 module Blog
   module Posts
     class PublishService
-      def initialize(post)
-        @post = post
+      include ActiveModel::Model
+      include ActiveModel::Attributes
+
+      attribute :post
+
+      def self.call(**attrs)
+        new(attrs).call
       end
 
       def call
-        # Your business logic for publishing a Post goes here
-        puts "MY POST PUBLISH SERVICE #{post}"
+        error = [true, false].sample
+
+        error ? simulate_error : simulate_publishing
       end
 
       private
 
-      attr_reader :post
+      def simulate_error
+        post.errors.add(:base, 'cannot be published')
+        return false
+      end
+
+      def simulate_publishing
+        Rails.logger.info("Publishing Post #{post.id}")
+        return true
+      end
     end
   end
 end
