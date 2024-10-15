@@ -11,7 +11,7 @@
 
 module Blog
   module Posts
-    class PublishService
+    class Publish
       include ActiveModel::Model
       include ActiveModel::Attributes
 
@@ -21,10 +21,15 @@ module Blog
         new(attrs).call
       end
 
-      def call
-        error = [true, false].sample
+      # When should services raise vs. handle errors?
+      #  - validation errors - use AR Validations
+      #  - errors from external dependencies - maybe handle and translate?
+      # What should services return?
+        # - the object itself?
+        # - the result of the method you're calling on the object?
 
-        error ? simulate_error : simulate_publishing
+      def call
+        [method(:simulate_error), method(:simulate_publishing)].sample.call
       end
 
       private
@@ -36,7 +41,7 @@ module Blog
 
       def simulate_publishing
         Rails.logger.info("Publishing Post #{post.id}")
-        return true
+        post.update(title: "#{post.title} PUBLISHED")
       end
     end
   end

@@ -6,6 +6,6 @@ class ServiceGenerator < Rails::Generators::Base
   argument :action_name, type: :string
 
   def create_service
-    template 'service.rb.erb', "app/services/#{namespace.underscore}/#{object.tableize}/#{action_name.underscore}_service.rb"
+    template 'service.rb.erb', "app/services/#{namespace.underscore}/#{object.tableize}/#{action_name.underscore}.rb"
   end
 end

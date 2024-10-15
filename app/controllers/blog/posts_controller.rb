@@ -49,7 +49,7 @@ class Blog::PostsController < ApplicationController
 
   def publish
     respond_to do |format|
-      if Blog::Posts::PublishService.call(post: @blog_post)
+      if Blog::Posts::Publish.call(post: @blog_post)
         format.html { redirect_to @blog_post, notice: "Post was successfully published." }
         format.json { render :show, status: :ok, location: @blog_post }
       else
