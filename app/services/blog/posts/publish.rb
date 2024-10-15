@@ -15,7 +15,8 @@ module Blog
       include ActiveModel::Model
       include ActiveModel::Attributes
 
-      attribute :post
+      attribute :object
+      alias_attribute :post, :object
 
       def self.call(**attrs)
         new(attrs).call
@@ -41,7 +42,7 @@ module Blog
 
       def simulate_publishing
         Rails.logger.info("Publishing Post #{post.id}")
-        post.update(title: "#{post.title} PUBLISHED")
+        post.update(title: "#{object.title} PUBLISHED")
       end
     end
   end
