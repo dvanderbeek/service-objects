@@ -11,15 +11,8 @@
 
 module Blog
   module Posts
-    class Publish
-      include ActiveModel::Model
-      include ActiveModel::Attributes
-
-      attribute :post
-
-      def self.call(**attrs)
-        new(attrs).call
-      end
+    class Publish < ApplicationService
+      alias_attribute :post, :object
 
       # When should services raise vs. handle errors?
       #  - validation errors - use AR Validations
